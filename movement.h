@@ -58,7 +58,7 @@ void initializeBoard( char (&board)[7][7] ){
                 for(int j=0; j<7; j++){
                     board[i][j] = line[j*2];
                 }
-                ++i;
+                i++;
             }
         }
         myfile.close();
