@@ -117,7 +117,7 @@ bool makeMove(char (&board)[7][7], char (&newBoard)[7][7], string pos, int x, in
 }
 
 boards tempBoard;
-bool finalAnswerAchieveda = false;
+bool finalAnswerAchieved = false;
 void BFSolution(char (&board)[7][7]){
     char newBoard[7][7];
 
@@ -127,10 +127,10 @@ void BFSolution(char (&board)[7][7]){
         if(score(board)==1){
             cout << "Possible score: " << score(board) << endl;
             printBoard(board);
-            finalAnswerAchieveda = true;
+            finalAnswerAchieved = true;
         }
     } else {
-        for(int i=0; i<moves.size() && !finalAnswerAchieveda; i++){
+        for(int i=0; i<moves.size() && !finalAnswerAchieved; i++){
             if(makeMove(board, newBoard, moves[i].direction ,moves[i].x, moves[i].y)){
                 if(!isBoardHere(newBoard,chronos[score(board)-1])){
                     copyBoard(newBoard,tempBoard.board);
