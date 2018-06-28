@@ -49,7 +49,7 @@ bool inRange( char (&board)[7][7], int x, int y){
 
 void initializeBoard( char (&board)[7][7] ){
     string line;
-    ifstream myfile("tab.txt");
+    ifstream myfile("board.txt");
 
     int i=0;
     if(myfile.is_open()){
