@@ -12,7 +12,7 @@ struct boards{
 
 vector <vector<boards> > chronos;
 
-bool equalBoards(char (&board)[7][7], char (&newBoard)[7][7]){
+bool areBoardEquals(char (&board)[7][7], char (&newBoard)[7][7]){
     for(int i=0; i<7; i++){
         for(int j=0; j<7; j++){
             if ( newBoard[i][j]!=board[i][j] ) {
@@ -26,7 +26,7 @@ bool equalBoards(char (&board)[7][7], char (&newBoard)[7][7]){
 
 bool isBoardHere(char (&board)[7][7], vector <boards> vet){
     for(int i=0; i<vet.size(); i++){
-        if (equalBoards(board,vet[i].board))
+        if (areBoardEquals(board,vet[i].board))
             return true;
     }
     return false;
@@ -117,9 +117,8 @@ bool makeMove(char (&board)[7][7], char (&newBoard)[7][7], string pos, int x, in
 }
 
 boards tempBoard;
-bool zabalaponga = false;
-int contadorAtemporal = 0;
-void ergia(char (&board)[7][7]){
+bool finalAnswerAchieveda = false;
+void BFSolution(char (&board)[7][7]){
     char newBoard[7][7];
 
     vector <movement> moves = possibleMoves(board);
@@ -128,16 +127,15 @@ void ergia(char (&board)[7][7]){
         if(score(board)==1){
             cout << "Possible score: " << score(board) << endl;
             printBoard(board);
-            zabalaponga = true;
+            finalAnswerAchieveda = true;
         }
     } else {
-        for(int i=0; i<moves.size() && !zabalaponga; i++){
+        for(int i=0; i<moves.size() && !finalAnswerAchieveda; i++){
             if(makeMove(board, newBoard, moves[i].direction ,moves[i].x, moves[i].y)){
                 if(!isBoardHere(newBoard,chronos[score(board)-1])){
                     copyBoard(newBoard,tempBoard.board);
                     chronos[score(board)-1].push_back(tempBoard);
-                    contadorAtemporal++;
-                    ergia(newBoard);
+                    BFSolution(newBoard);
                 }
             }
         }
@@ -145,7 +143,7 @@ void ergia(char (&board)[7][7]){
 
 }
 
-void kindaDumb(char (&board)[7][7]){
+void naiveSolution(char (&board)[7][7]){
     string possibleMoves[] = {"up", "down", "left", "right"};
     while (checkPossibleMoves(board, 0) ) {
         for(int i=0; i<7; i++){
@@ -167,7 +165,7 @@ int main(){
     printBoard(board);
 
     vector <pair<int, int> > movementsMade;
-    ergia(board);
+    BFSolution(board);
 
     return 0;
 }
